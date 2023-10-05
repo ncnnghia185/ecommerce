@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>G4 Ecommerce Shop</title>
+
+</head>
+
+<body>
+  {%if request.user.is_authenticated%} <!-- Check if user is logged in -->
+    {% include "ecom/user/customer_navbar.html" %} <!-- Include customer navbar -->
+  {%else%} <!-- User is not logged in -->
+    {% include "ecom/core/navbar.html" %} <!-- Include regular navbar -->
+  {%endif%}
+
+
+  {%block content%}
+
+  {%endblock content%}
+
+  
+  {% include "ecom/core/footer.html" %} <!-- Include footer -->
+</body>
+
+
+</html>

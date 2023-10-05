@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+        <title>Map View</title>
+        <style>
+            #map { 
+                width:100%;
+                height: 100vh; 
+            }
+        </style>
+    </head>
+        <body>
+            <div id="map"></div>
+        </body>
+</html>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+<script>
+    //Layer map with Google Streets tiles
+    var map = L.map('map').setView([20.99212993718209, 105.80456338194338], 15);
+    var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+    osm.addTo(map);
+    googleStreets = L.tileLayer('http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}',{
+        maxZoom: 20,
+        subdomains:['mt0','mt1','mt2','mt3']
+    });
+    googleStreets.addTo(map);
+    
+    var marker = L.marker([20.99212993718209, 105.80456338194338]).addTo(map);
+
+// Tạo Control.geocoder để tìm kiếm địa chỉ và xác định một hàm callback để xử lý tọa độ
+var endmarker = L.Control.geocoder({
+  defaultMarkGeocode: false,
+  collapsed: false 
+}).on('markgeocode', function(e) {
+  var latlng2 = e.geocode.center;
+  var lat = latlng2.lat;
+  var lng = latlng2.lng;
+
+  // Tạo Routing control sau khi lấy được tọa độ
+  var routingControl = L.Routing.control({
+    waypoints: [
+      L.latLng(20.99212993718209, 105.80456338194338), // Điểm bắt đầu
+      L.latLng(lat, lng) // Điểm cuối cùng (endmarker)
+    ]
+  }).addTo(map);
+
+  // Sử dụng đoạn mã dưới đây để di chuyển marker từ điểm đến này sang điểm đến khác
+  routingControl.on('routesfound', function(e) {
+    var coordinates = e.routes[0].coordinates;
+    var currentIndex = 0;
+
+    function moveMarkerToNextWaypoint() {
+      if (currentIndex < coordinates.length) {
+        var waypoint = coordinates[currentIndex];
+        marker.setLatLng(waypoint);
+        currentIndex++;
+
+        // Di chuyển marker đến điểm kế tiếp sau một khoảng thời gian
+        setTimeout(moveMarkerToNextWaypoint, 1000); // thời gian (1 giây)
+      }
+    }
+
+    // Bắt đầu di chuyển marker
+    moveMarkerToNextWaypoint();
+  });
+
+  // Tính toán và hiển thị đường đi
+  routingControl.route();
+}).addTo(map);
+    
+    endmarker.addTo(map);
+</script>
+            

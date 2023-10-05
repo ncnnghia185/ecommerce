@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết đơn hàng</title>
+</head>
+<body>
+    <h1>Chi tiết đơn hàng</h1>
+    
+    <!-- Hiển thị thông tin từ biến api_data -->
+    <p><strong>Mã đơn hàng:</strong> {{ data.order_code }}</p>
+    <p><strong>Tên người gửi:</strong> {{ data.from_name }}</p>
+    <p><strong>Điện thoại người gửi:</strong> {{ data.from_phone }}</p>
+    <p><strong>Địa chỉ người gửi:</strong> {{ data.from_address }}</p>
+    
+    <!-- Hiển thị thông tin từ biến api_data -->
+    <p><strong>Tên khách hàng:</strong> {{ data.to_name }}</p>
+    <p><strong>Địa chỉ người nhận:</strong> {{ data.to_address }}</p>
+    <p><strong>Điện thoại người nhận:</strong> {{ data.to_phone }}</p>
+    
+    <!-- Hiển thị thông tin về các mặt hàng -->
+    <h2>Các mặt hàng trong đơn hàng</h2>
+    <ul>
+        {% for item in data.items %}
+            <li>
+                Tên mặt hàng: {{ item.name }}
+                Số lượng: {{ item.quantity }}
+            </li>
+        {% endfor %}
+    </ul>
+    
+    <!-- Các thông tin khác từ biến api_data -->
+    
+</body>
+</html>
+

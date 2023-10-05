@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Form</title>   
+        <style>
+          /* Định dạng cơ bản cho form */
+            #shippingForm {
+              max-width: 500px;
+              margin: 0 auto;
+              padding: 20px;
+              background-color: #f5f5f5;
+              border: 1px solid #ddd;
+              border-radius: 5px;
+            }
+
+            /* Định dạng tiêu đề */
+            h1 {
+              font-size: 24px;
+              color: #333;
+              margin-bottom: 20px;
+            }
+
+            /* Định dạng các label và input */
+            label {
+              display: block;
+              margin-bottom: 5px;
+              font-weight: bold;
+              color: #333;
+            }
+
+            input[type="text"],
+            input[type="number"] {
+              width: 100%;
+              padding: 10px;
+              margin-bottom: 15px;
+              border: 1px solid #ccc;
+              border-radius: 3px;
+              box-sizing: border-box;
+            }
+
+            /* Định dạng nút Submit */
+            button[type="submit"] {
+              background-color: #007bff;
+              color: #fff;
+              padding: 10px 20px;
+              border: none;
+              border-radius: 3px;
+              cursor: pointer;
+            }
+
+            button[type="submit"]:hover {
+              background-color: #0056b3;
+            }
+
+            /* Định dạng các section */
+            section {
+              border: 1px solid #ddd;
+              padding: 15px;
+              margin-bottom: 20px;
+              border-radius: 5px;
+              background-color: #fff;
+            }
+
+            /* Định dạng các required field */
+            abbr[title="required"] {
+              color: red;
+              font-weight: bold;
+            }
+
+            /* Định dạng lỗi khi validation fails */
+            .error {
+              color: red;
+            }
+
+            /* Định dạng lỗi khi validation fails cho input */
+            .error-input {
+              border-color: red;
+            }
+        </style>  
+    </head>
+    <body>
+     
+        <form id="shippingForm" >
+          {% csrf_token %}
+            <h1> Tạo vận đơn trên Giao Hàng Nhanh</h1>
+            <section>
+                <p>
+                    <label for="payment_type_id">
+                        <span>Hình thức thanh toán</span>
+                        <strong><abbr title="required">*</abbr></strong>
+                    </label>
+                    <input type="number" id="payment_type_id" name="payment_type_id"  required/>
+                </p>
+                
+                <p>
+                    <label for="required_note">
+                        <span>Ghi chú bắt buộc</span>
+                        <strong><abbr title="required">*</abbr></strong>
+                    </label>
+                    <input type="text" id="required_note" name="required_note"  required/>
+                </p>
+                <p>
+                    <label for="return_phone">
+                        <span>Số điện thoại trả hàng (khi không giao được!!)</span>
+                    </label>
+                    <input type="text" id="return_phone" name="return_phone"/>
+                </p>
+                <p>
+                    <label for="return_address">
+                        <span>Địa chỉ trả hàng khi không giao được.</span>
+                    </label>
+                    <input type="text" id="return_address" name="return_address"/>
+                </p>
+                <p>
+                    <label for="return_district_id">
+                        <span>Quận/Huyện nơi nhận hàng trả</span>
+                    </label>
+                    <input type="number" id="return_district_id" name="return_district_id"/>
+                </p>
+                <p>
+                    <label for="return_ward_code">
+                        <span>Phường / Xã người nhận hàng trả</span>
+                    </label>
+                    <input type="text" id="return_ward_code" name="return_ward_code"/>
+                </p>
+                <p>
+                    <label for="client_order_code">
+                        <span>Mã đơn hàng riêng của khách hàng</span>
+                    </label>
+                    <input type="text" id="client_order_code" name="client_order_code"/>
+                </p>
+                <p>
+                    <label for="to_name">
+                        <span>Tên người nhận hàng</span>
+                        <strong><abbr title="required">*</abbr></strong>
+                    </label>
+                    <input type="text" id="to_name" name="to_name"  required/>
+                </p>
+                <p>
+                    <label for="to_phone">
+                        <span>Só điện thoại người nhận hàng</span>
+                        <strong><abbr title="required">*</abbr></strong>
+                    </label>
+                    <input type="text" id="to_phone" name="to_phone"  required/>
+                </p>
+                <p>
+                    <label for="to_address">
+                        <span>Địa chỉ Shiper tới giao hàng.</span>
+                        <strong><abbr title="required">*</abbr></strong>
+                    </label>
+                    <input type="text" id="to_address" name="to_address"  required/>
+                </p>
+                <p>
+                    <label for="to_ward_name">
+                        <span>Phường/Xã của người nhận hàng.</span>
+                        <strong><abbr title="required">*</abbr></strong>
+                    </label>
+                    <input type="text" id="to_ward_name" name="to_ward_name"  required/>
+                </p>
+                <p>
+                    <label for="to_district_name">
+                        <span>Quận/Huyện của người nhận hàng.</span>
+                        <strong><abbr title="required">*</abbr></strong>
+                    </label>
+                    <input type="text" id="to_district_name" name="to_district_name"  required/>
+                </p>
+                <p>
+                    <label for="to_province_name">
+                        <span>Tỉnh của người gửi hàng.</span>
+                    </label>
+                    <input type="text" id="to_province_name" name="to_province_name"/>
+                </p>
+                <p>
+                    <label for="cod_amount">
+                        <span>Tiền thu hộ cho người gửi.</span>
+                    </label>
+                    <input type="number" id="cod_amount" name="cod_amount"/>
+                </p>
+                <p>
+                    <label for="content">
+                        <span>Nội dung của đơn hàng.</span>
+                    </label>
+                    <input type="text" id="content" name="content"/>
+                </p>
+                <p>
+                    <label for="weight">
+                        <span>Khối lượng của đơn hàng (gram).</span>
+                        <strong><abbr title="required">*</abbr></strong>
+                        <h6 style="border: 2px solid #f0f0f0; background-color: #f7f7f7; padding: 10px; max-width: 300px; color: red;">
+                            <strong>Lưu ý:</strong> Tối đa :30.000 gram (30 kg).
+                        </h6>
+                    </label>
+                    <input type="number" id="weight" name="weight"  required/>
+                </p>
+                <p>
+                    <label for="length">
+                        <span>Chiều dài của đơn hàng (cm).</span>
+                        <strong><abbr title="required">*</abbr></strong>
+                        <h6 style="border: 2px solid #f0f0f0; background-color: #f7f7f7; padding: 10px; max-width: 300px; color: red;">
+                            <strong>Lưu ý:</strong> Tối đa :150cm.
+                        </h6>
+                    </label>
+                    <input type="number" id="length" name="length"  required/>
+                </p>
+                <p>
+                    <label for="width">
+                        <span>Chiều rộng của đơn hàng (cm).</span>
+                        <strong><abbr title="required">*</abbr></strong>
+                        <h6 style="border: 2px solid #f0f0f0; background-color: #f7f7f7; padding: 10px; max-width: 300px; color: red;">
+                            <strong>Lưu ý:</strong> Tối đa :150cm.
+                        </h6>
+                    </label>
+                    <input type="number" id="width" name="width"  required/>
+                </p>
+                <p>
+                    <label for="height">
+                        <span>Chiều cao của đơn hàng (cm).</span>
+                        <strong><abbr title="required">*</abbr></strong>
+                        <h6 style="border: 2px solid #f0f0f0; background-color: #f7f7f7; padding: 10px; max-width: 300px; color: red;">
+                            <strong>Lưu ý:</strong> Tối đa :150cm.
+                        </h6>
+                    </label>
+                    <input type="number" id="height" name="height"  required/>
+                </p>
+                <p>
+                    <label for="cod_failed_amount">
+                        <span>Thu thêm tiền khi giao hàng thất bại</span>
+                    </label>
+                    <input type="text" id="cod_failed_amount" name="cod_failed_amount"/>
+                </p>
+                <p>
+                    <label for="pick_station_id">
+                        <span>Mã bưu cục để gửi hàng tại điểm.</span>
+                    </label>
+                    <input type="number" id="pick_station_id" name="pick_station_id"/>
+                </p>
+                {% comment %} <p>
+                    <label for="deliver_station_id">
+                        <span>Deliver station id</span>
+                        <strong><abbr title="required">*</abbr></strong>
+                    </label>
+                    <input type="text" id="deliver_station_id" name="deliver_station_id"/>
+                </p> {% endcomment %}
+                <p>
+                    <label for="insurance_value">
+                        <span>Giá trị của đơn hàng</span>
+                        <strong><abbr title="required">*</abbr></strong>
+                        <h6>( Trường hợp mất hàng , bể hàng sẽ đền theo giá trị của đơn hàng)</h6>
+                        <h6 style="border: 2px solid #f0f0f0; background-color: #f7f7f7; padding: 10px; max-width: 300px; color: red;">
+                            <strong>Lưu ý:</strong> Tối đa :5000000đ.
+                        </h6>
+                    </label>
+                    <input type="number" id="insurance_value" name="insurance_value"  required/>
+                </p>
+                <p>
+                    <label for="service_id">
+                        <span>Thông tin chính xác từng dịch vụ phù hợp với tuyến đường</span>
+                        <strong><abbr title="required">*</abbr></strong>
+                    </label>
+                    <input type="number" id="service_id" name="service_id"  required/>
+                </p>
+                <p>
+                    <label for="service_type_id">
+                        <span>Mã loại dịch vụ:</span>
+                        <strong><abbr title="required">*</abbr></strong>
+                    </label>
+                    <input type="number" id="service_type_id" name="service_type_id"  required/>
+                </p>
+                
+                <p>
+                    <label for="pickup_time">
+                        <span>thời gian mong muốn lấy hàng</span>
+                        <h6 style="border: 2px solid #f0f0f0; background-color: #f7f7f7; padding: 10px; max-width: 300px; color: red;">
+                            <strong>Lưu ý:</strong>  định dạng UnixtimeStamp.
+                        </h6>
+                    </label>
+                    <input type="text" id="pickup_time" name="pickup_time"/>
+                </p>
+             </section>
+                <hr>
+                <section>
+                    <p>
+                        <label for="item_name">
+                            <span>Tên của sản phẩm.</span>
+                            <strong><abbr title="required">*</abbr></strong>
+                        </label>
+                        <input type="text" id="item_name" name="item_name" required>
+                    </p>
+                    <p>
+                        <label for="item_code">
+                            <span>Mã của sản phẩm.</span>
+                        </label>
+                        <input type="text" id="item_code" name="item_code">
+                    </p>
+                    <p>
+                        <label for="item_quantity">
+                            <span>Số lượng của sản phẩm.</span>
+                            <strong><abbr title="required">*</abbr></strong>
+                        </label>
+                        <input type="number" id="item_quantity" name="item_quantity" required>
+                    </p>
+                    <p>
+                        <label for="item_price">
+                            <span>Giá của sản phẩm.</span>
+                        </label>
+                        <input type="text" id="item_price" name="item_price">
+                    </p>
+                    <p>
+                        <label for="item_length">
+                            <span>Chiều dài của sản phẩm</span>
+                            <h6 style="border: 2px solid #f0f0f0; background-color: #f7f7f7; padding: 10px; max-width: 300px; color: red;">
+                                <strong>Lưu ý:</strong>Chuyển phát truyền thống.
+                            </h6>
+                        </label>
+                        <input type="text" id="item_length" name="item_length">
+                    </p>
+                    <p>
+                        <label for="item_width">
+                            <span>Chiều rộng của sản phẩm.</span>
+                            <h6 style="border: 2px solid #f0f0f0; background-color: #f7f7f7; padding: 10px; max-width: 300px; color: red;">
+                                <strong>Lưu ý:</strong>Chuyển phát truyền thống.
+                            </h6>
+                        </label>
+                        <input type="text" id="item_width" name="item_width">
+                    </p>
+                    <p>
+                        <label for="item_weight">
+                            <span>Khối lượng của sản phẩm</span>
+                            <h6 style="border: 2px solid #f0f0f0; background-color: #f7f7f7; padding: 10px; max-width: 300px; color: red;">
+                                <strong>Lưu ý:</strong>Chuyển phát truyền thống.
+                            </h6>
+                        </label>
+                        <input type="text" id="item_weight" name="item_weight">
+                    </p>
+                    <p>
+                        <label for="item_height">
+                            <span>Chiều cao của sản phẩm</span>
+                            <h6 style="border: 2px solid #f0f0f0; background-color: #f7f7f7; padding: 10px; max-width: 300px; color: red;">
+                                <strong>Lưu ý:</strong>Chuyển phát truyền thống.
+                            </h6>
+                        </label>
+                        <input type="text" id="item_height" name="item_height">
+                    </p>
+                </section>  
+                <p><button type="submit">Tạo vận đơn</button></p> 
+            
+        </form>
+
+        <script>
+        // JavaScript code to format the form data into the desired JSON structure
+        document.getElementById('shippingForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            // Convert form data to JSON
+            const jsonData = {
+                payment_type_id: parseInt(formData.get('payment_type_id')),
+                
+                required_note: formData.get('required_note'),
+                return_phone: formData.get('return_phone'),
+                return_address: formData.get('return_address'),
+                return_district_id: parseInt(formData.get('return_district_id')),
+                return_ward_code: formData.get('return_ward_code'),
+                client_order_code: formData.get('client_order_code'),
+                to_name: formData.get('to_name'),
+                to_phone: formData.get('to_phone'),
+                to_address : formData.get('to_address'),
+                to_ward_name: formData.get('to_ward_name'),
+                to_district_name : formData.get('to_district_name'),
+                to_province_name: formData.get('to_province_name'),
+                cod_amount: parseInt(formData.get('cod_amount')),
+                content: formData .get('content'),
+                weight: parseInt(formData.get('weight')),
+                length: parseInt(formData.get('length')),
+                width: parseInt(formData.get('width')),
+                height: parseInt(formData.get('height')),
+                cod_failed_amount: parseInt(formData.get('cod_failed_amount')),
+                pick_station_id: parseInt(formData.get('pick_station_id')),
+                //deliver_station_id: parseInt(formData.get('deliver_station_id')),
+                insurance_value: parseInt(formData.get('insurance_value')),
+                service_id: parseInt(formData.get('service_id')),
+                service_type_id: parseInt(formData.get('service_type_id')),
+                
+                pickup_time: parseInt(formData.get('pickup_time')),
+                
+                items: [
+                    {
+                        name: formData.get('item_name'),
+                        code: formData.get('item_code'),
+                        quantity: parseInt(formData.get('item_quantity')),
+                        price: parseInt(formData.get('item_price')),
+                        length: parseInt(formData.get('item_length')),
+                        width: parseInt(formData.get('item_width')),
+                        weight: parseInt(formData.get('item_weight')),
+                        height: parseInt(formData.get('item_height')),
+                    }
+                ]
+            };
+console.log(jsonData);
+         
+            const apiUrl = "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create";
+            const headers ={
+                'Content-Type': 'application/json',
+                'ShopId': '188677',
+                'Token' : 'd8574292-4ab3-11ee-b1d4-92b443b7a897',
+            }
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(jsonData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('API response:', data);
+                alert('Shipping request submitted successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error submitting shipping request.');
+            });
+        });
+
+        
+        // // Add functionality to dynamically add more item fields
+        // document.getElementById('addItem').addEventListener('click', function () {
+        //     const itemsContainer = document.getElementById('itemsContainer');
+        //     const newItem = document.querySelector('.item').cloneNode(true);
+        //     itemsContainer.appendChild(newItem);
+        // });
+    </script>
+    </body>
+</html>    
